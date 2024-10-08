@@ -23,55 +23,58 @@ package com.google.zxing;
  */
 public enum BarcodeFormat {
 
-  /** Aztec 2D barcode format. */
-  AZTEC,
+    /* AH Dierenkaartjes */
+    AH,
 
-  /** CODABAR 1D format. */
-  CODABAR,
+    /** Aztec 2D barcode format. */
+    AZTEC,
 
-  /** Code 39 1D format. */
-  CODE_39,
+    /** CODABAR 1D format. */
+    CODABAR,
 
-  /** Code 93 1D format. */
-  CODE_93,
+    /** Code 39 1D format. */
+    CODE_39,
 
-  /** Code 128 1D format. */
-  CODE_128,
+    /** Code 93 1D format. */
+    CODE_93,
 
-  /** Data Matrix 2D barcode format. */
-  DATA_MATRIX,
+    /** Code 128 1D format. */
+    CODE_128,
 
-  /** EAN-8 1D format. */
-  EAN_8,
+    /** Data Matrix 2D barcode format. */
+    DATA_MATRIX,
 
-  /** EAN-13 1D format. */
-  EAN_13,
+    /** EAN-8 1D format. */
+    EAN_8,
 
-  /** ITF (Interleaved Two of Five) 1D format. */
-  ITF,
+    /** EAN-13 1D format. */
+    EAN_13,
 
-  /** MaxiCode 2D barcode format. */
-  MAXICODE,
+    /** ITF (Interleaved Two of Five) 1D format. */
+    ITF,
 
-  /** PDF417 format. */
-  PDF_417,
+    /** MaxiCode 2D barcode format. */
+    MAXICODE,
 
-  /** QR Code 2D barcode format. */
-  QR_CODE,
+    /** PDF417 format. */
+    PDF_417,
 
-  /** RSS 14 */
-  RSS_14,
+    /** QR Code 2D barcode format. */
+    QR_CODE,
 
-  /** RSS EXPANDED */
-  RSS_EXPANDED,
+    /** RSS 14 */
+    RSS_14,
 
-  /** UPC-A 1D format. */
-  UPC_A,
+    /** RSS EXPANDED */
+    RSS_EXPANDED,
 
-  /** UPC-E 1D format. */
-  UPC_E,
+    /** UPC-A 1D format. */
+    UPC_A,
 
-  /** UPC/EAN extension format. Not a stand-alone format. */
-  UPC_EAN_EXTENSION
+    /** UPC-E 1D format. */
+    UPC_E,
+
+    /** UPC/EAN extension format. Not a stand-alone format. */
+    UPC_EAN_EXTENSION
 
 }

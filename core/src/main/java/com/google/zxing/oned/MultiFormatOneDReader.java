@@ -16,6 +16,10 @@
 
 package com.google.zxing.oned;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.NotFoundException;
@@ -25,10 +29,6 @@ import com.google.zxing.Result;
 import com.google.zxing.common.BitArray;
 import com.google.zxing.oned.rss.RSS14Reader;
 import com.google.zxing.oned.rss.expanded.RSSExpandedReader;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * @author dswitkin@google.com (Daniel Switkin)
@@ -40,18 +40,15 @@ public final class MultiFormatOneDReader extends OneDReader {
 
   private final OneDReader[] readers;
 
-  public MultiFormatOneDReader(Map<DecodeHintType,?> hints) {
+  public MultiFormatOneDReader(Map<DecodeHintType, ?> hints) {
     @SuppressWarnings("unchecked")
-    Collection<BarcodeFormat> possibleFormats = hints == null ? null :
-        (Collection<BarcodeFormat>) hints.get(DecodeHintType.POSSIBLE_FORMATS);
-    boolean useCode39CheckDigit = hints != null &&
-        hints.get(DecodeHintType.ASSUME_CODE_39_CHECK_DIGIT) != null;
+    Collection<BarcodeFormat> possibleFormats = hints == null ? null
+        : (Collection<BarcodeFormat>) hints.get(DecodeHintType.POSSIBLE_FORMATS);
+    boolean useCode39CheckDigit = hints != null && hints.get(DecodeHintType.ASSUME_CODE_39_CHECK_DIGIT) != null;
     Collection<OneDReader> readers = new ArrayList<>();
     if (possibleFormats != null) {
-      if (possibleFormats.contains(BarcodeFormat.EAN_13) ||
-          possibleFormats.contains(BarcodeFormat.UPC_A) ||
-          possibleFormats.contains(BarcodeFormat.EAN_8) ||
-          possibleFormats.contains(BarcodeFormat.UPC_E)) {
+      if (possibleFormats.contains(BarcodeFormat.EAN_13) || possibleFormats.contains(BarcodeFormat.UPC_A)
+          || possibleFormats.contains(BarcodeFormat.EAN_8) || possibleFormats.contains(BarcodeFormat.UPC_E)) {
         readers.add(new MultiFormatUPCEANReader(hints));
       }
       if (possibleFormats.contains(BarcodeFormat.CODE_39)) {
@@ -75,6 +72,9 @@ public final class MultiFormatOneDReader extends OneDReader {
       if (possibleFormats.contains(BarcodeFormat.RSS_EXPANDED)) {
         readers.add(new RSSExpandedReader());
       }
+      if (possibleFormats.contains(BarcodeFormat.AH)) {
+        readers.add(new AhBarcodeDecoder());
+      }
     }
     if (readers.isEmpty()) {
       readers.add(new MultiFormatUPCEANReader(hints));
@@ -85,14 +85,13 @@ public final class MultiFormatOneDReader extends OneDReader {
       readers.add(new ITFReader());
       readers.add(new RSS14Reader());
       readers.add(new RSSExpandedReader());
+      readers.add(new AhBarcodeDecoder());
     }
     this.readers = readers.toArray(EMPTY_ONED_ARRAY);
   }
 
   @Override
-  public Result decodeRow(int rowNumber,
-                          BitArray row,
-                          Map<DecodeHintType,?> hints) throws NotFoundException {
+  public Result decodeRow(int rowNumber, BitArray row, Map<DecodeHintType, ?> hints) throws NotFoundException {
     for (OneDReader reader : readers) {
       try {
         return reader.decodeRow(rowNumber, row, hints);
